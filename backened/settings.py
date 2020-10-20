@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']   # GAE's safety features guarantee that doing so is secure.
 
 
 # Application definition
