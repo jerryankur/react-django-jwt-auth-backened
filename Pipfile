@@ -10,6 +10,8 @@ django = "*"
 djangorestframework = "*"
 djangorestframework-jwt = "*"
 django-cors-headers = "*"
+pymysql = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.9"

@@ -155,3 +155,9 @@ dmypy.json
 
 # ide
 .vscode
+
+# database credentials
+database.py
+
+# collected static filed
+/static
