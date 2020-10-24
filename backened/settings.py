@@ -15,28 +15,23 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-"""
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 
-"""
-
 import environ
 env = environ.Env(
     DEBUG= (bool, False)
 )
 environ.Env.read_env()
 
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']   # GAE's safety features guarantee that doing so is secure.
+ALLOWED_HOSTS = ['*']   # App Engine's safety features guarantee that doing so is secure.
 
 
 # Application definition
@@ -87,45 +82,16 @@ WSGI_APPLICATION = 'backened.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-"""
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('DBENGINE'),
+        'HOST': env('DBHOST'),
+        'USER': env('DBUSER'),
+        'PASSWORD': env('DBPASS'),
+        'NAME': env('DBNAME'),
     }
 }
-"""
 
-# [START db_setup]
-import os
-if os.getenv('GAE_APPLICATION', None):
-    # Running on production App Engine, so connect to Google Cloud SQL using
-    # the unix socket at /cloudsql/<your-cloudsql-connection string>
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': env('HOST'),
-            'USER': env('USER'),
-            'PASSWORD': env('PASSWORD'),
-            'NAME': env('NAME'),
-        }
-    }
-else:
-    # Running locally so connect to either a local MySQL instance or connect 
-    # to Cloud SQL via the proxy.  To start the proxy via command line: 
-    #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306 
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-            'NAME': env('NAME'),
-            'USER': env('USER'),
-            'PASSWORD': env('PASSWORD'),
-        }
-    }
-# [END db_setup]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -177,6 +143,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+# CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://coderpd.me'

@@ -161,3 +161,5 @@ database.py
 
 # collected static filed
 /static
+
+.azure

@@ -15,4 +15,4 @@ django-cors-headers
 django-environ
 djangorestframework
 djangorestframework-jwt
-pymysql
+psycopg2-binary
